@@ -1,0 +1,10 @@
+# Design-tool exports — not referenced by the site
+stitch_export/
+stitch_cloud_engineering_lab_portfolio.zip
+
+# OS / editor cruft
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
