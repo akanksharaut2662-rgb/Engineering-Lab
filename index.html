@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Engineering Lab</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css?v=38">
+</head>
+<body class="app-shell">
+
+    <!-- Top Navigation Bar -->
+    <header class="topbar">
+        <div class="flex items-center gap-md">
+            <button id="mobile-menu-btn" class="topbar__mobile-menu" aria-label="Open Menu">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="topbar__brand">
+                <span class="material-symbols-outlined icon-fill">cloud</span>
+                Akanksha's Engineering Lab
+            </div>
+        </div>
+        
+        <div class="topbar__search" id="global-search-wrap">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" id="global-search" autocomplete="off" role="combobox"
+                   aria-expanded="false" aria-controls="search-results"
+                   placeholder="Search projects, awards, or pages...">
+            <button type="button" class="topbar__search-clear" id="global-search-clear" aria-label="Clear search" hidden>
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="search-results" id="search-results" role="listbox" hidden></div>
+        </div>
+        
+        <div class="topbar__actions">
+            <button type="button" class="topbar__shell" data-cloudshell-open
+                    aria-label="Open CloudShell" title="Open CloudShell">
+                <span class="material-symbols-outlined">terminal</span>
+                <span class="topbar__shell-label">CloudShell</span>
+            </button>
+
+            <!-- Theme Toggle -->
+            <button id="theme-toggle-btn" class="theme-toggle" aria-label="Toggle Theme">
+                <span class="material-symbols-outlined">light_mode</span> Theme
+            </button>
+            
+            <div class="topbar__divider"></div>
+            
+            <a href="#profile" class="flex items-center gap-sm ml-2 text-decoration-none">
+                <div class="topbar__avatar" id="topbar-avatar"><img src="pp.png" alt="Akanksha Raut"></div>
+            </a>
+        </div>
+    </header>
+
+    <div class="flex flex-1 relative">
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar__header">
+                <h2>Cloud Lab</h2>
+                <p>AWS-Style Console</p>
+            </div>
+            
+            <div class="sidebar__nav">
+                <a href="#profile" class="sidebar__link nav-link">
+                    <span class="material-symbols-outlined">account_circle</span>
+                    About Me
+                </a>
+                <a href="#overview" class="sidebar__link nav-link">
+                    <span class="material-symbols-outlined icon-fill">dashboard</span>
+                    Lab Overview
+                </a>
+                <a href="#systems" class="sidebar__link nav-link">
+                    <span class="material-symbols-outlined">account_tree</span>
+                    Systems / Projects
+                </a>
+                <a href="#break-my-architecture" class="sidebar__link nav-link">
+                    <span class="material-symbols-outlined">biotech</span>
+                    Break My Architecture
+                </a>
+            </div>
+            
+            <div class="sidebar__footer">
+                <div class="sidebar__region">
+                    <div class="sidebar__region-dot"></div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-xs" style="color:var(--text-primary)">ca-central-1</span>
+                        <span class="text-xs" style="color:var(--text-secondary);font-size:10px;">Canada (Central)</span>
+                    </div>
+                </div>
+                <div class="sidebar__operator">
+                    <span class="material-symbols-outlined">location_on</span>
+                    <span>Operator &middot; Halifax, NS</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content flex-1 w-full relative">
+            <div class="content-container pb-24">
+                
+                <!-- PAGE: Lab Overview -->
+                <div id="page-overview" class="hidden">
+                    <section class="lab-hero">
+                        <div class="lab-hero__bar">
+                            <div class="breadcrumbs">
+                                <a href="#overview">Cloud Services</a>
+                                <span class="material-symbols-outlined">chevron_right</span>
+                                <span class="current">Lab Overview</span>
+                            </div>
+                            <span class="lab-status">
+                                <span class="lab-status__dot"></span> Lab Online
+                            </span>
+                        </div>
+
+                        <div class="lab-hero__body">
+                            <div class="lab-hero__copy">
+                                <p class="lab-hero__greeting">Hello,</p>
+                                <h1 class="lab-hero__title">Where would you like to start?</h1>
+                                <p class="lab-hero__subtitle">This lab is your control panel. Choose where you want to start and explore my projects, architecture and experience.</p>
+                            </div>
+                            <div class="lab-hero__art" aria-hidden="true">
+                                <svg viewBox="0 0 440 280" role="presentation" focusable="false">
+                                    <defs>
+                                        <radialGradient id="heroGlow" cx="50%" cy="45%" r="55%">
+                                            <stop offset="0%" class="hero-glow-in"/>
+                                            <stop offset="100%" class="hero-glow-out"/>
+                                        </radialGradient>
+                                        <filter id="heroBlur" x="-60%" y="-60%" width="220%" height="220%">
+                                            <feGaussianBlur stdDeviation="4"/>
+                                        </filter>
+                                    </defs>
+
+                                    <ellipse cx="220" cy="140" rx="200" ry="130" fill="url(#heroGlow)"/>
+
+                                    <g class="hero-orbit">
+                                        <ellipse cx="220" cy="150" rx="180" ry="66"/>
+                                        <ellipse cx="220" cy="150" rx="120" ry="44"/>
+                                    </g>
+
+                                    <g class="hero-edges">
+                                        <path d="M220 36 L140 82 M220 36 L300 82 M220 36 L220 120"/>
+                                        <path d="M140 82 L80 140 M140 82 L220 120 M300 82 L220 120 M300 82 L360 140"/>
+                                        <path d="M80 140 L140 190 M80 140 L60 210 M360 140 L300 190 M360 140 L380 210"/>
+                                        <path d="M220 120 L140 190 M220 120 L300 190"/>
+                                        <path d="M140 190 L220 210 M300 190 L220 210"/>
+                                        <path d="M140 190 L150 245 M300 190 L290 245"/>
+                                        <path d="M60 210 L150 245 M380 210 L290 245"/>
+                                        <path d="M220 210 L220 268 M150 245 L220 268 M290 245 L220 268"/>
+                                    </g>
+
+                                    <g class="hero-nodes">
+                                        <circle cx="140" cy="82" r="5"/>
+                                        <circle cx="300" cy="82" r="5"/>
+                                        <circle cx="80" cy="140" r="4"/>
+                                        <circle cx="360" cy="140" r="4"/>
+                                        <circle cx="140" cy="190" r="5"/>
+                                        <circle cx="300" cy="190" r="5"/>
+                                        <circle cx="60" cy="210" r="3.5"/>
+                                        <circle cx="380" cy="210" r="3.5"/>
+                                        <circle cx="220" cy="210" r="4"/>
+                                        <circle cx="150" cy="245" r="3.5"/>
+                                        <circle cx="290" cy="245" r="3.5"/>
+                                        <circle cx="220" cy="268" r="3.5"/>
+                                    </g>
+
+                                    <g class="hero-core">
+                                        <circle cx="220" cy="120" r="16" filter="url(#heroBlur)"/>
+                                        <circle cx="220" cy="120" r="8"/>
+                                        <circle cx="220" cy="36" r="10" filter="url(#heroBlur)"/>
+                                        <circle cx="220" cy="36" r="5.5"/>
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="entry-grid">
+                        <a href="#profile" class="entry-card entry-card--mint">
+                            <span class="entry-card__spark" aria-hidden="true">
+                                <svg viewBox="0 0 96 34" role="presentation" focusable="false">
+                                    <path class="spark-fill" d="M0 27 L13 23 L26 26 L39 17 L52 20 L65 11 L78 14 L91 6 L96 8 L96 34 L0 34 Z"/>
+                                    <path class="spark-line" d="M0 27 L13 23 L26 26 L39 17 L52 20 L65 11 L78 14 L91 6 L96 8"/>
+                                </svg>
+                            </span>
+                            <span class="entry-card__icon">
+                                <span class="material-symbols-outlined">person</span>
+                            </span>
+                            <h3 class="entry-card__title">Meet the Engineer</h3>
+                            <p class="entry-card__desc">Background, experience, skills and goals.</p>
+                            <span class="entry-card__cta">Explore <span class="material-symbols-outlined">arrow_forward</span></span>
+                        </a>
+
+                        <a href="#systems" class="entry-card entry-card--azure">
+                            <span class="entry-card__spark" aria-hidden="true">
+                                <svg viewBox="0 0 96 34" role="presentation" focusable="false">
+                                    <path class="spark-fill" d="M0 20 L12 13 L22 24 L34 9 L45 21 L57 12 L69 23 L80 10 L91 18 L96 13 L96 34 L0 34 Z"/>
+                                    <path class="spark-line" d="M0 20 L12 13 L22 24 L34 9 L45 21 L57 12 L69 23 L80 10 L91 18 L96 13"/>
+                                </svg>
+                            </span>
+                            <span class="entry-card__icon">
+                                <span class="material-symbols-outlined">deployed_code</span>
+                            </span>
+                            <h3 class="entry-card__title">Explore the Systems</h3>
+                            <p class="entry-card__desc">Projects, architecture and technical details.</p>
+                            <span class="entry-card__cta">Explore <span class="material-symbols-outlined">arrow_forward</span></span>
+                        </a>
+
+                        <a href="#break-my-architecture" class="entry-card entry-card--amber">
+                            <span class="entry-card__spark" aria-hidden="true">
+                                <svg viewBox="0 0 96 34" role="presentation" focusable="false">
+                                    <path class="spark-fill" d="M0 12 L14 14 L24 11 L34 30 L44 8 L54 27 L66 13 L78 16 L88 10 L96 13 L96 34 L0 34 Z"/>
+                                    <path class="spark-line" d="M0 12 L14 14 L24 11 L34 30 L44 8 L54 27 L66 13 L78 16 L88 10 L96 13"/>
+                                </svg>
+                            </span>
+                            <span class="entry-card__icon">
+                                <span class="material-symbols-outlined">warning</span>
+                            </span>
+                            <h3 class="entry-card__title">Break the Architecture</h3>
+                            <p class="entry-card__desc">Test failure scenarios and see how it responds.</p>
+                            <span class="entry-card__cta">Explore <span class="material-symbols-outlined">arrow_forward</span></span>
+                        </a>
+
+                        <a href="#profile/connect" class="entry-card entry-card--violet">
+                            <span class="entry-card__spark" aria-hidden="true">
+                                <svg viewBox="0 0 96 34" role="presentation" focusable="false">
+                                    <path class="spark-fill" d="M0 24 L11 17 L21 25 L32 14 L43 22 L54 10 L65 19 L76 9 L87 16 L96 11 L96 34 L0 34 Z"/>
+                                    <path class="spark-line" d="M0 24 L11 17 L21 25 L32 14 L43 22 L54 10 L65 19 L76 9 L87 16 L96 11"/>
+                                </svg>
+                            </span>
+                            <span class="entry-card__icon">
+                                <span class="material-symbols-outlined">forum</span>
+                            </span>
+                            <h3 class="entry-card__title">Get in Touch</h3>
+                            <p class="entry-card__desc">Reach out and speak to the engineer.</p>
+                            <span class="entry-card__cta">Explore <span class="material-symbols-outlined">arrow_forward</span></span>
+                        </a>
+                    </div>
+
+                    <button type="button" class="shell-promo" id="open-cloudshell-btn"
+                            data-cloudshell-open aria-label="Open CloudShell">
+                        <span class="shell-promo__screen" aria-hidden="true">
+                            <span class="shell-promo__chrome">
+                                <i class="shell-promo__dot shell-promo__dot--r"></i>
+                                <i class="shell-promo__dot shell-promo__dot--y"></i>
+                                <i class="shell-promo__dot shell-promo__dot--g"></i>
+                                <span class="shell-promo__tab">akanksha@cloud-lab</span>
+                            </span>
+                            <span class="shell-promo__lines">
+                                <span class="shell-promo__line">
+                                    <span class="shell-promo__ps1">$</span>
+                                    <span class="shell-promo__typed" id="shell-promo-typed"></span><i class="shell-promo__caret"></i>
+                                </span>
+                            </span>
+                        </span>
+                        <span class="shell-promo__copy">
+                            <span class="shell-promo__eyebrow">
+                                <span class="material-symbols-outlined">terminal</span>
+                                Interactive
+                            </span>
+                            <span class="shell-promo__title">Prefer a terminal? Explore the lab by command.</span>
+                            <span class="shell-promo__desc">A real, browsable shell over this site &mdash; <code>ls</code>, <code>cd</code>, <code>cat</code> and more. Read-only, no setup.</span>
+                            <span class="shell-promo__cta">
+                                Open CloudShell <span class="material-symbols-outlined">arrow_forward</span>
+                            </span>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- PAGE: Systems / Projects Index -->
+                <div id="page-systems" class="hidden">
+                    <div class="page-header">
+                        <div class="breadcrumbs">
+                            <a href="#overview">Cloud Lab</a>
+                            <span class="material-symbols-outlined">chevron_right</span>
+                            <span class="current">Systems / Projects</span>
+                        </div>
+                        <div class="page-header__row">
+                            <div>
+                                <h1 class="page-header__title font-display-lg">Systems Directory</h1>
+                                <p class="page-header__subtitle">Systems and platforms I have designed, built, and deployed.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="system-grid" id="systems-grid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- PAGE: Project Resource (Dynamic Template) -->
+                <div id="page-project" class="hidden">
+                    <div class="page-header mb-md">
+                        <div class="breadcrumbs">
+                            <a href="#overview">Cloud Lab</a>
+                            <span class="material-symbols-outlined">chevron_right</span>
+                            <a href="#systems">Architectures</a>
+                            <span class="material-symbols-outlined">chevron_right</span>
+                            <span class="current" id="project-breadcrumb-name">Project</span>
+                        </div>
+                        <div class="page-header__row">
+                            <div>
+                                <h1 class="page-header__title font-display-lg" id="project-title">Project Title</h1>
+                                <div class="flex items-center gap-md mt-sm">
+                                    <div class="font-mono text-xs text-secondary-color flex items-center gap-1">
+                                        <span class="material-symbols-outlined" style="font-size:14px">fingerprint</span>
+                                        <span id="project-resource-id">prj-id</span>
+                                    </div>
+                                    <div class="font-mono text-xs text-secondary-color flex items-center gap-1">
+                                        <span class="material-symbols-outlined" style="font-size:14px">cloud</span>
+                                        <span id="project-platform">platform</span>
+                                    </div>
+                                    <span class="team-chip" id="project-team-chip" hidden>
+                                        <span class="material-symbols-outlined">group</span> Group Project
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex gap-sm">
+                                <button class="btn btn-secondary" id="project-chaos-btn" onclick="window.location.hash='break-my-architecture'">
+                                    <span class="material-symbols-outlined text-error">warning</span> Break Architecture
+                                </button>
+                                <button class="btn btn-primary" id="project-demo-btn" type="button">
+                                    <span class="material-symbols-outlined">play_circle</span> View Demo
+                                </button>
+                                <a class="btn btn-secondary" id="project-demo-link" target="_blank" rel="noopener noreferrer" hidden>
+                                    <span class="material-symbols-outlined">open_in_new</span> Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2-1">
+                        <!-- Left Col -->
+                        <div class="flex flex-col gap-lg">
+                            <!-- Deployment lifecycle notice -->
+                            <div class="lifecycle-note" id="project-status-note" hidden>
+                                <span class="material-symbols-outlined">info</span>
+                                <p></p>
+                            </div>
+
+                            <!-- Summary & Features -->
+                            <section>
+                                <div class="project-section__title">
+                                    <span class="material-symbols-outlined">description</span> Summary
+                                </div>
+                                <div class="project-summary" id="project-summary"></div>
+                                
+                                <h4 class="font-bold text-sm mb-sm mt-md">Key Features</h4>
+                                <ul class="feature-list" id="project-features">
+                                    <!-- Populated by JS -->
+                                </ul>
+                            </section>
+
+                            <!-- Architecture Diagram -->
+                            <section id="project-arch-section">
+                                <div class="project-section__title">
+                                    <span class="material-symbols-outlined">schema</span> Architecture
+                                </div>
+                                <figure class="arch-figure" id="project-arch-figure">
+                                    <button type="button" class="arch-figure__frame" id="project-arch-zoom" aria-label="Open architecture diagram at full size">
+                                        <img id="project-arch-img" src="" alt="">
+                                        <span class="arch-figure__zoom">
+                                            <span class="material-symbols-outlined">zoom_in</span> Click to enlarge
+                                        </span>
+                                    </button>
+                                </figure>
+                                <div class="diagram-placeholder" id="project-arch-empty" hidden>
+                                    <span class="material-symbols-outlined">architecture</span>
+                                    <p>Architecture diagram not available yet</p>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Right Col -->
+                        <div class="flex flex-col gap-lg">
+                            <!-- Tech Stack -->
+                            <div class="resource-panel">
+                                <div class="resource-panel__header">
+                                    <h3><span class="material-symbols-outlined">layers</span> Technology Stack</h3>
+                                </div>
+                                <div class="resource-panel__body" style="padding:0;background:var(--surface-container-lowest);">
+                                    <table class="data-table">
+                                        <tbody id="project-tech-stack">
+                                            <!-- Populated by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <!-- Source Code -->
+                            <div class="resource-panel" id="project-source-panel">
+                                <div class="resource-panel__header">
+                                    <h3><span class="material-symbols-outlined">code</span> Source</h3>
+                                </div>
+                                <div class="resource-panel__body bg-surface-container-lowest p-0" id="project-source-links">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+                            <!-- Behind the Build -->
+                            <div class="resource-panel resource-panel--stretch" id="project-btb-panel">
+                                <div class="resource-panel__header">
+                                    <h3><span class="material-symbols-outlined">construction</span> Behind the Build</h3>
+                                </div>
+                                <div class="resource-panel__body bg-surface-container-lowest" id="project-behind-the-build">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Demo Section -->
+                    <section id="project-demo-section" class="mt-lg">
+                        <div class="project-section__title">
+                            <span class="material-symbols-outlined" id="project-demo-icon">play_circle</span>
+                            <span id="project-demo-heading">Demo</span>
+                        </div>
+                        <div class="demo-note" id="project-demo-note" hidden>
+                            <span class="material-symbols-outlined">group</span>
+                            <p>This was a group project. The walkthrough below was recorded by a teammate, so their account name appears in the recording.</p>
+                        </div>
+
+                        <!-- Recorded walkthrough -->
+                        <div class="demo-video" id="project-demo-video" hidden>
+                            <video id="project-demo-player" controls preload="metadata" playsinline></video>
+                        </div>
+
+                        <!-- Projects with no recording fall back to the written report -->
+                        <div class="demo-doc" id="project-demo-doc" hidden>
+                            <p class="demo-doc__msg" id="project-demo-doc-msg"></p>
+                            <button type="button" class="doc-card" id="project-demo-doc-card">
+                                <span class="doc-card__thumb">
+                                    <span class="material-symbols-outlined doc-card__fallback">picture_as_pdf</span>
+                                    <canvas class="doc-card__page" id="project-demo-doc-thumb" aria-hidden="true" hidden></canvas>
+                                </span>
+                                <span class="doc-card__meta">
+                                    <span class="doc-card__title" id="project-demo-doc-title"></span>
+                                    <span class="doc-card__sub" id="project-demo-doc-sub"></span>
+                                    <span class="doc-card__action">
+                                        <span class="material-symbols-outlined">visibility</span> Preview
+                                    </span>
+                                </span>
+                            </button>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- PAGE: Break My Architecture -->
+                <div id="page-break-my-architecture" class="hidden">
+                    <div class="page-header">
+                        <div class="breadcrumbs">
+                            <a href="#overview">Cloud Lab</a>
+                            <span class="material-symbols-outlined">chevron_right</span>
+                            <span class="current">Break My Architecture</span>
+                        </div>
+                        <div class="page-header__row">
+                            <div>
+                                <h1 class="page-header__title font-display-lg">Architecture Simulation</h1>
+                                <p class="page-header__subtitle">Inject faults and observe system resilience in real-time. (Interactive features are simulated)</p>
+                            </div>
+                            <div class="flex gap-sm">
+                                <button class="btn btn-secondary">
+                                    <span class="material-symbols-outlined">restart_alt</span> Reset Environment
+                                </button>
+                                <button class="btn btn-primary">
+                                    <span class="material-symbols-outlined text-error">play_arrow</span> Execute Scenario
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-1-2">
+                        <!-- Left Col: Scenarios -->
+                        <div class="flex flex-col gap-md">
+                            <div class="resource-panel">
+                                <div class="resource-panel__header">
+                                    <h3><span class="material-symbols-outlined text-warning">warning</span> Failure Scenarios</h3>
+                                </div>
+                                <div class="resource-panel__body flex flex-col gap-sm bg-surface-container-lowest">
+                                    <!-- Active Scenario -->
+                                    <div class="scenario-card" style="border-left:4px solid var(--status-error)">
+                                        <div class="flex justify-between items-start mb-sm">
+                                            <div class="scenario-card__title">AZ Outage</div>
+                                            <span class="badge badge-error">CRITICAL</span>
+                                        </div>
+                                        <div class="scenario-card__desc">Simulate complete loss of availability zone us-east-1a.</div>
+                                        <div class="font-mono text-[10px] text-secondary-color mt-sm opacity-70">Target: VPC-Main, RDS-Primary</div>
+                                    </div>
+                                    
+                                    <div class="scenario-card">
+                                        <div class="flex justify-between items-start mb-sm">
+                                            <div class="scenario-card__title">API Failure</div>
+                                            <span class="badge badge-warning">WARNING</span>
+                                        </div>
+                                        <div class="scenario-card__desc">Simulate external LLM endpoint timeout (DalBot)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Telemetry -->
+                            <div class="resource-panel">
+                                <div class="resource-panel__header">
+                                    <h3><span class="material-symbols-outlined">monitoring</span> Telemetry</h3>
+                                </div>
+                                <div class="resource-panel__body bg-surface-container-lowest grid-2">
+                                    <div>
+                                        <div class="stat-card__label mb-sm">Error Rate (5xx)</div>
+                                        <div class="font-display-lg text-error">14.2%</div>
+                                        <div class="text-xs text-error flex items-center mt-1"><span class="material-symbols-outlined" style="font-size:14px">trending_up</span> +12%</div>
+                                    </div>
+                                    <div>
+                                        <div class="stat-card__label mb-sm">Avg Latency</div>
+                                        <div class="font-display-lg text-warning">845ms</div>
+                                        <div class="text-xs text-warning flex items-center mt-1"><span class="material-symbols-outlined" style="font-size:14px">trending_up</span> +600ms</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Col: Diagram -->
+                        <div class="resource-panel" style="min-height:500px">
+                            <div class="resource-panel__header">
+                                <h3><span class="material-symbols-outlined">account_tree</span> Topology View</h3>
+                                <span class="badge badge-error"><span class="material-symbols-outlined" style="font-size:14px">warning</span> SIMULATION ACTIVE</span>
+                            </div>
+                            <div class="resource-panel__body bg-surface-deep flex flex-col items-center justify-center p-md relative overflow-hidden" style="border:4px dashed var(--status-error); background:rgba(239,68,68,0.05)">
+                                
+                                <div class="font-display-lg text-error mb-md flex items-center gap-sm">
+                                    <span class="material-symbols-outlined" style="font-size:48px">power_off</span>
+                                    AZ us-east-1a OFFLINE
+                                </div>
+                                <p class="text-center text-sm mb-lg max-w-md">Traffic routing to standby instances in us-east-1b. RDS Primary promotion in progress.</p>
+                                
+                                <button class="btn btn-secondary">View Complete Logs</button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAGE: Engineer Profile -->
+                <div id="page-profile" class="hidden">
+                    <div class="page-header">
+                        <div class="breadcrumbs">
+                            <span class="current">About Me</span>
+                        </div>
+                        <div class="page-header__row">
+                            <div>
+                                <h1 class="page-header__title font-display-lg">About Me</h1>
+                                <p class="page-header__subtitle">Profile, engineering background, and recognition history.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-1-2 profile-grid">
+                        <!-- Left Col -->
+                        <div class="flex flex-col gap-md">
+                            <!-- Identity Card -->
+                            <div class="resource-panel">
+                                <div class="resource-panel__body bg-surface-container-lowest">
+                                    <div class="profile-card">
+                                        <div class="profile-avatar"><img src="pp.png" alt="Akanksha Raut"></div>
+                                        <h3 class="font-headline-md text-center" id="profile-name">Name</h3>
+                                        <div class="text-sm font-bold mt-sm text-center" id="profile-role">Role</div>
+                                        <div class="text-xs text-secondary-color mt-sm mb-lg text-center" id="profile-tagline" style="font-style: italic">Tagline</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <!-- Engineering Focus -->
+                            <div class="resource-panel">
+                                <div class="resource-panel__header">
+                                    <h3><span class="material-symbols-outlined">radar</span> ENGINEERING FOCUS</h3>
+                                </div>
+                                <div class="resource-panel__body bg-surface-container-lowest">
+                                    <div id="profile-focus" class="flex flex-col gap-sm text-sm">
+                                        <!-- JS Populated -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Beyond The Lab -->
+                            <div class="resource-panel">
+                                <div class="resource-panel__header">
+                                    <h3><span class="material-symbols-outlined">photo_library</span> BEYOND THE LAB</h3>
+                                </div>
+                                <div class="resource-panel__body bg-surface-container-lowest p-0 relative" style="overflow: hidden">
+                                    <div id="carousel-container" class="carousel">
+                                        <div class="carousel-inner" id="carousel-inner">
+                                            <!-- Populated by JS -->
+                                        </div>
+                                        <button class="carousel-control prev" id="carousel-prev" aria-label="Previous image"><span class="material-symbols-outlined">chevron_left</span></button>
+                                        <button class="carousel-control next" id="carousel-next" aria-label="Next image"><span class="material-symbols-outlined">chevron_right</span></button>
+                                        <div class="carousel-indicators" id="carousel-indicators">
+                                            <!-- Populated by JS -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Col -->
+                        <div class="flex flex-col gap-md">
+                            <div class="grid-2">
+                                <!-- Experience -->
+                                <div class="resource-panel">
+                                    <div class="resource-panel__header">
+                                        <h3><span class="material-symbols-outlined">work</span> EXPERIENCE</h3>
+                                    </div>
+                                    <div class="resource-panel__body bg-surface-container-lowest">
+                                        <div class="timeline" id="profile-experience">
+                                            <!-- JS Populated -->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Education -->
+                                <div class="resource-panel">
+                                    <div class="resource-panel__header">
+                                        <h3><span class="material-symbols-outlined">school</span> EDUCATION</h3>
+                                    </div>
+                                    <div class="resource-panel__body bg-surface-container-lowest flex flex-col gap-md" id="profile-education">
+                                        <!-- JS Populated -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Awards & Recognition -->
+                            <div class="resource-panel resource-panel--fill">
+                                <div class="resource-panel__header">
+                                    <h3><span class="material-symbols-outlined">workspace_premium</span> AWARDS &amp; RECOGNITION</h3>
+                                    <span class="resource-panel__count" id="awards-count">0 records</span>
+                                </div>
+                                <div class="record-metrics" id="awards-metrics">
+                                    <!-- JS Populated -->
+                                </div>
+                                <div class="resource-panel__body" style="padding:0;background:var(--surface-container-lowest);overflow-x:auto;">
+                                    <table class="data-table record-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Resource Name</th>
+                                                <th>Recognition Type</th>
+                                                <th>Organization</th>
+                                                <th class="text-center">Occurrences</th>
+                                                <th>Status</th>
+                                                <th class="text-right">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="profile-achievements">
+                                            <!-- JS Populated -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Connect Attention Banner -->
+                    <div class="connect-banner-wrap" id="profile-connect-section">
+                        <div class="connect-banner">
+                            <div class="connect-banner__header">
+                                <span class="material-symbols-outlined connect-banner__icon">hub</span>
+                                <h4 class="connect-banner__title">Let's Connect &amp; Collaborate</h4>
+                            </div>
+                            <p class="connect-banner__subtitle">Open for cloud architecture discussions, software engineering, or technical exchanges.</p>
+                            <div id="profile-connect-footer" class="connect-banner__links">
+                                <!-- JS Populated with high-impact pill buttons -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- end content-container -->
+        </main>
+    </div>
+
+    <!-- CloudShell: a simulated, read-only terminal over the lab's own data -->
+    <section id="cloudshell" class="cloudshell" role="dialog" aria-modal="false"
+             aria-label="Cloud Lab shell" hidden>
+        <header class="cs-bar">
+            <div class="cs-bar__left">
+                <span class="material-symbols-outlined cs-bar__icon">terminal</span>
+                <span class="cs-bar__title">CloudShell</span>
+                <span class="cs-bar__region">ca-central-1</span>
+            </div>
+            <button type="button" class="cs-close" aria-label="Close CloudShell">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </header>
+        <div class="cs-body">
+            <div class="cs-output" aria-live="polite"></div>
+            <div class="cs-inputline">
+                <span class="cs-prompt"></span>
+                <input type="text" class="cs-input" autocomplete="off" autocorrect="off"
+                       autocapitalize="off" spellcheck="false" aria-label="Shell command">
+            </div>
+        </div>
+        <div class="cs-chips" aria-label="Example commands"></div>
+    </section>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-nav">
+        <a href="#profile" class="mobile-nav__link nav-link">
+            <span class="material-symbols-outlined">account_circle</span>
+            About Me
+        </a>
+        <a href="#overview" class="mobile-nav__link nav-link">
+            <span class="material-symbols-outlined icon-fill">dashboard</span>
+            Overview
+        </a>
+        <a href="#systems" class="mobile-nav__link nav-link">
+            <span class="material-symbols-outlined">account_tree</span>
+            Systems
+        </a>
+        <a href="#break-my-architecture" class="mobile-nav__link nav-link">
+            <span class="material-symbols-outlined">biotech</span>
+            BMA
+        </a>
+    </nav>
+
+    <!-- Recognition Proof Viewer -->
+    <div class="rec-modal" id="rec-modal" role="dialog" aria-modal="true" aria-labelledby="rec-modal-title" hidden>
+        <div class="rec-modal__backdrop" data-rec-close></div>
+        <div class="rec-modal__panel">
+            <div class="rec-modal__header">
+                <div>
+                    <div class="rec-modal__eyebrow" id="rec-modal-eyebrow">Recognition record</div>
+                    <h3 class="rec-modal__title" id="rec-modal-title">Recognition</h3>
+                </div>
+                <div class="rec-modal__actions">
+                    <a class="rec-modal__open" id="rec-modal-open" href="#" target="_blank" rel="noopener noreferrer" hidden>
+                        <span class="material-symbols-outlined">open_in_new</span> Open in new tab
+                    </a>
+                    <button class="rec-modal__close" data-rec-close aria-label="Close">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="rec-modal__meta" id="rec-modal-meta"></div>
+            <div class="rec-modal__body">
+                <img id="rec-modal-img" src="" alt="">
+                <iframe class="rec-modal__doc" id="rec-modal-doc" title="Document preview" hidden></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js?v=34"></script>
+    <script src="js/app.js?v=34"></script>
+    <script src="js/cloudshell.js?v=38"></script>
+</body>
+</html>
