@@ -39,6 +39,26 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenuBtn.addEventListener('click', toggleSidebar);
     overlay.addEventListener('click', toggleSidebar);
 
+    // --- Sidebar Collapse (desktop rail) ---
+    // Retargets --sidebar-width on <html>; .sidebar and .main-content both
+    // read that token, so the layout follows without measuring anything.
+    const collapseBtn = document.getElementById('sidebar-collapse-btn');
+    if (collapseBtn) {
+        const setCollapsed = (collapsed) => {
+            htmlElement.classList.toggle('sidebar-collapsed', collapsed);
+            collapseBtn.setAttribute('aria-expanded', String(!collapsed));
+            collapseBtn.setAttribute('aria-label', collapsed ? 'Expand navigation' : 'Collapse navigation');
+        };
+
+        setCollapsed(localStorage.getItem('sidebarCollapsed') === '1');
+
+        collapseBtn.addEventListener('click', () => {
+            const collapsed = !htmlElement.classList.contains('sidebar-collapsed');
+            setCollapsed(collapsed);
+            localStorage.setItem('sidebarCollapsed', collapsed ? '1' : '0');
+        });
+    }
+
     // --- Routing ---
     const pages = ['overview', 'systems', 'project', 'break-my-architecture', 'profile'];
     const navLinks = document.querySelectorAll('.nav-link');
