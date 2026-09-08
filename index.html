@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/styles.css?v=38">
+    <link rel="stylesheet" href="css/styles.css?v=41">
 </head>
 <body class="app-shell">
 
@@ -62,25 +62,28 @@
         <nav id="sidebar" class="sidebar">
             <div class="sidebar__header">
                 <h2>Cloud Lab</h2>
-                <p>AWS-Style Console</p>
+                <button type="button" id="sidebar-collapse-btn" class="sidebar__collapse"
+                        aria-label="Collapse navigation" aria-expanded="true" aria-controls="sidebar">
+                    <span class="material-symbols-outlined">menu_open</span>
+                </button>
             </div>
             
             <div class="sidebar__nav">
-                <a href="#profile" class="sidebar__link nav-link">
+                <a href="#profile" class="sidebar__link nav-link" data-label="About Me">
                     <span class="material-symbols-outlined">account_circle</span>
-                    About Me
+                    <span class="sidebar__label">About Me</span>
                 </a>
-                <a href="#overview" class="sidebar__link nav-link">
+                <a href="#overview" class="sidebar__link nav-link" data-label="Lab Overview">
                     <span class="material-symbols-outlined icon-fill">dashboard</span>
-                    Lab Overview
+                    <span class="sidebar__label">Lab Overview</span>
                 </a>
-                <a href="#systems" class="sidebar__link nav-link">
+                <a href="#systems" class="sidebar__link nav-link" data-label="Systems / Projects">
                     <span class="material-symbols-outlined">account_tree</span>
-                    Systems / Projects
+                    <span class="sidebar__label">Systems / Projects</span>
                 </a>
-                <a href="#break-my-architecture" class="sidebar__link nav-link">
+                <a href="#break-my-architecture" class="sidebar__link nav-link" data-label="Break My Architecture">
                     <span class="material-symbols-outlined">biotech</span>
-                    Break My Architecture
+                    <span class="sidebar__label">Break My Architecture</span>
                 </a>
             </div>
             
@@ -458,84 +461,73 @@
                         </div>
                         <div class="page-header__row">
                             <div>
-                                <h1 class="page-header__title font-display-lg">Architecture Simulation</h1>
-                                <p class="page-header__subtitle">Inject faults and observe system resilience in real-time. (Interactive features are simulated)</p>
-                            </div>
-                            <div class="flex gap-sm">
-                                <button class="btn btn-secondary">
-                                    <span class="material-symbols-outlined">restart_alt</span> Reset Environment
-                                </button>
-                                <button class="btn btn-primary">
-                                    <span class="material-symbols-outlined text-error">play_arrow</span> Execute Scenario
-                                </button>
+                                <h1 class="page-header__title font-display-lg">Break My Architecture</h1>
+                                <p class="page-header__subtitle">Pick a system, inject a failure, and see what gives. Diagrams are simplified request paths &mdash; the full architecture lives on each project page.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid-1-2">
-                        <!-- Left Col: Scenarios -->
-                        <div class="flex flex-col gap-md">
-                            <div class="resource-panel">
-                                <div class="resource-panel__header">
-                                    <h3><span class="material-symbols-outlined text-warning">warning</span> Failure Scenarios</h3>
-                                </div>
-                                <div class="resource-panel__body flex flex-col gap-sm bg-surface-container-lowest">
-                                    <!-- Active Scenario -->
-                                    <div class="scenario-card" style="border-left:4px solid var(--status-error)">
-                                        <div class="flex justify-between items-start mb-sm">
-                                            <div class="scenario-card__title">AZ Outage</div>
-                                            <span class="badge badge-error">CRITICAL</span>
-                                        </div>
-                                        <div class="scenario-card__desc">Simulate complete loss of availability zone us-east-1a.</div>
-                                        <div class="font-mono text-[10px] text-secondary-color mt-sm opacity-70">Target: VPC-Main, RDS-Primary</div>
-                                    </div>
-                                    
-                                    <div class="scenario-card">
-                                        <div class="flex justify-between items-start mb-sm">
-                                            <div class="scenario-card__title">API Failure</div>
-                                            <span class="badge badge-warning">WARNING</span>
-                                        </div>
-                                        <div class="scenario-card__desc">Simulate external LLM endpoint timeout (DalBot)</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Telemetry -->
-                            <div class="resource-panel">
-                                <div class="resource-panel__header">
-                                    <h3><span class="material-symbols-outlined">monitoring</span> Telemetry</h3>
-                                </div>
-                                <div class="resource-panel__body bg-surface-container-lowest grid-2">
-                                    <div>
-                                        <div class="stat-card__label mb-sm">Error Rate (5xx)</div>
-                                        <div class="font-display-lg text-error">14.2%</div>
-                                        <div class="text-xs text-error flex items-center mt-1"><span class="material-symbols-outlined" style="font-size:14px">trending_up</span> +12%</div>
-                                    </div>
-                                    <div>
-                                        <div class="stat-card__label mb-sm">Avg Latency</div>
-                                        <div class="font-display-lg text-warning">845ms</div>
-                                        <div class="text-xs text-warning flex items-center mt-1"><span class="material-symbols-outlined" style="font-size:14px">trending_up</span> +600ms</div>
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- Step 1: choose a system -->
+                    <div class="ba-step">
+                        <span class="ba-step__num">1</span>
+                        <span class="ba-step__label">Choose a system</span>
+                    </div>
+                    <div class="ba-projects" id="ba-projects" role="group" aria-label="Choose a system"></div>
+
+                    <!-- Step 2: choose a scenario -->
+                    <div class="ba-step">
+                        <span class="ba-step__num">2</span>
+                        <span class="ba-step__label">Inject a failure</span>
+                    </div>
+
+                    <div class="ba-layout">
+                        <div class="ba-col-left">
+                            <div class="ba-scenarios" id="ba-scenarios" role="group" aria-label="Failure scenarios"></div>
+                            <button type="button" class="ba-reset" id="ba-reset">
+                                <span class="material-symbols-outlined">restart_alt</span> Reset to healthy
+                            </button>
                         </div>
 
-                        <!-- Right Col: Diagram -->
-                        <div class="resource-panel" style="min-height:500px">
-                            <div class="resource-panel__header">
-                                <h3><span class="material-symbols-outlined">account_tree</span> Topology View</h3>
-                                <span class="badge badge-error"><span class="material-symbols-outlined" style="font-size:14px">warning</span> SIMULATION ACTIVE</span>
-                            </div>
-                            <div class="resource-panel__body bg-surface-deep flex flex-col items-center justify-center p-md relative overflow-hidden" style="border:4px dashed var(--status-error); background:rgba(239,68,68,0.05)">
-                                
-                                <div class="font-display-lg text-error mb-md flex items-center gap-sm">
-                                    <span class="material-symbols-outlined" style="font-size:48px">power_off</span>
-                                    AZ us-east-1a OFFLINE
+                        <div class="ba-col-right">
+                            <div class="ba-diagram">
+                                <div class="ba-diagram__bar">
+                                    <div class="ba-diagram__id">
+                                        <span class="ba-diagram__name" id="ba-diagram-name"></span>
+                                        <span class="ba-diagram__plat" id="ba-platform"></span>
+                                    </div>
+                                    <span class="ba-status ba-status--healthy" id="ba-status">
+                                        <span class="ba-status__dot"></span>
+                                        <span id="ba-status-text">All systems nominal</span>
+                                    </span>
                                 </div>
-                                <p class="text-center text-sm mb-lg max-w-md">Traffic routing to standby instances in us-east-1b. RDS Primary promotion in progress.</p>
-                                
-                                <button class="btn btn-secondary">View Complete Logs</button>
-                                
+                                <p class="ba-diagram__blurb" id="ba-blurb"></p>
+                                <div class="ba-stage" id="ba-stage"></div>
+                                <div class="ba-legend">
+                                    <span class="ba-legend__item"><i class="ba-key ba-key--ok"></i> Healthy</span>
+                                    <span class="ba-legend__item"><i class="ba-key ba-key--warn"></i> Degraded</span>
+                                    <span class="ba-legend__item"><i class="ba-key ba-key--down"></i> Failed</span>
+                                    <span class="ba-legend__item"><i class="ba-key ba-key--alt"></i> Proposed fallback (not built)</span>
+                                </div>
+                            </div>
+
+                            <div class="ba-resting" id="ba-resting">
+                                <span class="material-symbols-outlined">bolt</span>
+                                <p>Select a failure scenario to see what breaks, what holds, and what production would need.</p>
+                            </div>
+
+                            <div class="ba-readout" id="ba-readout" hidden>
+                                <section class="ba-card ba-card--impact">
+                                    <h3><span class="material-symbols-outlined">crisis_alert</span> Impact</h3>
+                                    <p id="ba-impact"></p>
+                                </section>
+                                <section class="ba-card ba-card--handling">
+                                    <h3><span class="material-symbols-outlined">build</span> Current Handling</h3>
+                                    <p id="ba-handling"></p>
+                                </section>
+                                <section class="ba-card ba-card--prod">
+                                    <h3><span class="material-symbols-outlined">verified</span> Production Approach</h3>
+                                    <p id="ba-production"></p>
+                                </section>
                             </div>
                         </div>
                     </div>
@@ -751,7 +743,9 @@
 
     <!-- Scripts -->
     <script src="js/data.js?v=34"></script>
-    <script src="js/app.js?v=34"></script>
+    <script src="js/app.js?v=41"></script>
+    <script src="js/scenarios.js?v=40"></script>
+    <script src="js/breakarch.js?v=40"></script>
     <script src="js/cloudshell.js?v=38"></script>
 </body>
 </html>
